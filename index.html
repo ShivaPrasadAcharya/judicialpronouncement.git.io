@@ -1,0 +1,1288 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Judicial Pronouncement</title>
+  <style>
+    /* CSS classes to control visibility */
+    body {
+    font-family: "Calibri", sans-serif;
+    font-size: 12pt; /* Set Calibri font size to 12 points */
+}
+
+body {
+    font-family: "Kokila", sans-serif;
+    font-size:large; /* Set Kokila font size to 18 points */
+}
+
+    /* Style for the toggle buttons */
+    button {
+      background-color: #007bff5f;
+      color: black;
+      border: none;
+      padding: 2px 2px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-size: small;
+      font-weight: bold;
+    }
+
+    /* Style for the active (toggled) buttons */
+    button.active {
+      background-color: #28a745;
+    }
+
+    textarea {
+      width: 80%;
+      max-width: 100%;
+      /* Ensure it doesn't exceed the viewport width */
+      box-sizing: border-box;
+      /* Include padding and border in the width calculation */
+    }
+
+    #input1 {
+      width: 20%;
+      box-sizing: border-box;
+      /* Include padding and border in the width calculation */
+    }
+
+    /* Add CSS for green and red backgrounds based on the match */
+    .match {
+      background-color: #28a745;
+      /* Green */
+    }
+
+    .no-match {
+      background-color: #dc3545;
+      /* Red */
+    }
+
+    /* New style for the output */
+    /* New style for the output */
+    .jkl-details {
+      display: none;
+      /*this stop the detail content from displaying atutomatically.remove it if needed*/
+      font-size: medium;
+      font-style: italic;
+      /* Add other styles as needed */
+    }
+
+    .xyz-details {
+      display: none;
+      /*this stop the detail content from displaying atutomatically.remove it if needed*/
+      font-size: small;
+      font-style: italic;
+      /* Add other styles as needed */
+    }
+
+    .details-content {
+      font-size: large;
+      font-style: italic;
+      /* Add other styles as needed */
+    }
+
+    #abbr {
+      display:none;
+    }
+
+    .highlight {
+      color: red;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .visible {
+      display: block;
+    }
+
+    #loadStateButton,
+    #saveStateButton {
+    color: brown;
+    }
+
+    #developedby {
+      font-style: italic;
+      color: brown;
+    }
+
+    .link-container {
+      position: fixed;
+      bottom: 100%;
+      left: 0;
+      right: 0;
+      text-align: bottom;
+    }
+
+    /* Style for the links */
+    .link-container a {
+      color: red;
+      text-decoration: none;
+      display: inline-block;
+      margin-right: 20px;
+      font-size: normal;
+    }
+#input0, #input00{
+background-color: lightgrey;
+width:30%;
+}
+
+/* Style the "Filter Raw Data" button */
+#filterRawDataButton {
+  background-color: #3498db; /* Initial background color */
+  color: white;
+  padding: 1px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Add transition for smooth color change */
+}
+
+/* Change the button background color on click */
+#filterRawDataButton.active {
+  background-color: #e74c3c; /* Active background color */
+}
+
+/*css for dropdown*/
+/* Style the dropdown container */
+/* Style the dropdown container */
+.dropdown {
+  position: fixed;
+  display: inline-block;
+}
+
+/* Style the dropdown button */
+.dropbtn {
+  background-color: #3498db;
+  color: white;
+  padding: 5px;
+  border: none;
+  cursor: pointer;
+  min-width: 60px;
+}
+
+/* Style the dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 130px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* Style the dropdown links/buttons */
+.dropdown-content button {
+  padding: 1px;
+  text-decoration: none;
+  display: block;
+  border: none;
+  width: 100%;
+  text-align: left;
+  transition: background-color 0.3s; /* Add transition for smooth color change */
+}
+
+/* Change the button color on hover */
+.dropdown-content button:hover {
+  background-color: #ddd;
+}
+
+/* Style the active button */
+.dropdown-content button.active {
+  background-color: green;
+  color: white;
+}
+
+/* Show the dropdown content when the button is hovered over or clicked */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+
+
+  </style>
+</head>
+
+<body>
+  <script>
+    //script for storing data array
+    var valuesArray = [
+{input1: "4.34", input2: "तद्विद्धि प्रणिपातेन परिप्रश्नेन सेवया।<br>उपदेक्ष्यन्ति ते ज्ञानं ज्ञानिनस्तत्त्वदर्शिनः।।", input3: "४.३४", input4: "", input5: "तद्विद्धि प्रणिपातेन ", input6: "परिप्रश्नेन सेवया।<br>", input7: "उपदेक्ष्यन्ति ते ज्ञानं ", input8: "ज्ञानिनस्तत्त्वदर्शिनः।।", input9: "४.३४<br><br>", input10: "tad viddhi praṇipātena ", input11: "paripraśnena sevayā<br> ", input12: "upadekṣyanti te jñānaṁ ", input13: "jñāninastattvadarśinaḥ.4.34<br><br>", input14: "", input15: "तद् = तपाईंको, विद्धि = जान्नुहोस्, प्रणिपातेन = समर्पण गर्दै, परिप्रश्नेन = प्रश्न गर्दै, सेवया = सेवा गर्दै, उपदेक्ष्यन्ति = सिकाउनेछन्, ते = तिमीलाई, ज्ञानं = ज्ञान, ज्ञानिनः = ज्ञानीहरू, तत्त्वदर्शिनः = तत्त्वदर्शीहरू<br><br>", input16: "तद् (tad) = that, विद्धि (viddhi) = know, प्रणिपातेन (praṇipātena) = through submission, परिप्रश्नेन (paripraśnena) = through inquiry, सेवया (sevayā) = through service, उपदेक्ष्यन्ति (upadekṣyanti) = will instruct, ते (te) = unto you, ज्ञानं (jñānaṁ) = knowledge, ज्ञानिनः (jñāninaḥ) = of those who know, तत्त्वदर्शिनः (tattva-darśinaḥ) = the seers of the truth,<br><br>",input17: "That (tad) know (viddhi) through submission (praṇipātena), through inquiry (paripraśnena), and through service (sevayā), they (te) will instruct (upadekṣyanti) you (te) in knowledge (jñānaṁ), the seers (jñāninaḥ) of the truth (tattva-darśinaḥ).<br><br>",input18: "",input19: "",input20: "Just try to learn the truth by approaching a spiritual master. Inquire from him submissively and render service unto him. The self-realized soul can impart knowledge unto you because he has seen the truth.<br><br>",input21: "",input22: "", input23: "",input24: "",input25: "", input26: "", input27: "", input28: "", input29: "", input30: "", input31: "", input32: "", input33: "", input34: "", input35: "", input36: "", input37: "", input38: "", input39: "", input40: "", input41: "", input42: "", input43: "", input44: "", input45: "", input46: "", input47: "", input48: "", input49: "", input50: "", input51: "", input52: "", input53: "", input54: "", input55: "", input56: "", input57: "", input58: "", input59: "", input60: "", input61: "", input62: "", input63: "", input64: "तद् (tad) = that, विद्धि (viddhi) = know, प्रणिपातेन (praṇipātena) = through submission, परिप्रश्नेन (paripraśnena) = through inquiry, सेवया (sevayā) = through service, उपदेक्ष्यन्ति (upadekṣyanti) = will instruct, ते (te) = unto you, ज्ञानं (jñānaṁ) = knowledge, ज्ञानिनः (jñāninaḥ) = of those who know, तत्त्वदर्शिनः (tattva-darśinaḥ) = the seers of the truth,"},
+
+
+{input1: "10.4", input2: "<br>बुद्धिर्ज्ञानमसम्मोहः क्षमा सत्यं दमः शमः। <br> सुखं दुःखं भवोऽभावो भयं चाभयमेव च।।10.4।।<br> महर्षयः सप्त पूर्वे चत्वारो मनवस्तथा। <br>मद्भावा मानसा जाता येषां लोकिमा मामृताः।।10.5।। ", input3: " ", input4: "बुद्धिर्ज्ञानमसम्मोहः ", input5: "क्षमा सत्यं दमः शमः। <br>", input6: "सुखं दुःखं भवोऽभावो ", input7: "भयं चाभयमेव च।।10.4।।<br>", input8: "महर्षयः सप्त पूर्वे ", input9: "चत्वारो मनवस्तथा।<br> ", input10: "मद्भावा मानसा जाता ", input11: "येषां लोकिमा मामृताः।।10.5।।<br><br>", input12: "buddhir jñānam asammohaḥ kṣamā satyaṁ damaḥ śamaḥ<br> sukhaṁ duḥkhaṁ bhavo abhāvo bhayaṁ cābhayam eva ca<br>maharṣayaḥ sapta pūrve catvāro manavas tathā<br> madbhāvā mānasā jātā yeṣāṁ lokimā māmṛtāḥ<br><br>", input13: "बुद्धिः (buddhiḥ) = Intelligence, ज्ञानम् (jñānam) = Knowledge, असम्मोहः (asammohaḥ) = Freedom from delusion, क्षमा (kṣamā) = Forgiveness, सत्यम् (satyam) = Truth, दमः (damaḥ) = Control of the senses, शमः (śamaḥ) = Control of the mind, सुखं (sukhaṁ) = Happiness, दुःखं (duḥkhaṁ) = Suffering, भवः (bhavaḥ) = Birth, अभावः (abhāvaḥ) = Death, भयं (bhayaṁ) = Fear, च (ca) = And, अभयम् (abhayam) = Fearlessness, एव (eva) = Certainly, च (ca) = And, महर्षयः (maharṣayaḥ) = The great sages, सप्त (sapta) = Seven, पूर्वे (pūrve) = Former, चत्वारः (catvāraḥ) = Four, मनवः (manavaḥ) = Manus (progenitors of mankind), तथा (tathā) = Also, मद्भावाः (madbhāvāḥ) = Born of My mind, मानसाः (mānasāḥ) = Mental, जाताः (jātāḥ) = Were born, येषां (yeṣāṁ) = Whose, लोकिम् (lokim) = In the planets, आ (ā) = In, माम् (mam) = Me, अमृताः (amṛtāḥ) = Immortal<br><br>", input14: "", input15: "Intelligence, knowledge, freedom from doubt and delusion, forgiveness, truthfulness, control of the senses, control of the mind, happiness, suffering, birth, death, fear, fearlessness, and also nonviolence, equanimity, satisfaction, austerity, charity, fame, and infamy — all these various qualities of living beings are created by Me alone.<br><br>", input16: "",input17: "",input18: "",input19: "",input20: "",input21: "",input22: "", input23: "",input24: "",input25: "", input26: "", input27: "", input28: "", input29: "", input30: "", input31: "", input32: "", input33: "", input34: "", input35: "", input36: "", input37: "", input38: "", input39: "", input40: "", input41: "", input42: "", input43: "", input44: "", input45: "", input46: "", input47: "", input48: "", input49: "", input50: "", input51: "", input52: "", input53: "", input54: "", input55: "", input56: "", input57: "", input58: "", input59: "", input60: "", input61: "", input62: "", input63: "", input64: "बुद्धिः (buddhiḥ) = Intelligence, ज्ञानम् (jñānam) = Knowledge, असम्मोहः (asammohaḥ) = Freedom from delusion, क्षमा (kṣamā) = Forgiveness, सत्यम् (satyam) = Truth, दमः (damaḥ) = Control of the senses, शमः (śamaḥ) = Control of the mind, सुखं (sukhaṁ) = Happiness, दुःखं (duḥkhaṁ) = Suffering, भवः (bhavaḥ) = Birth, अभावः (abhāvaḥ) = Death, भयं (bhayaṁ) = Fear, च (ca) = And, अभयम् (abhayam) = Fearlessness, एव (eva) = Certainly, च (ca) = And, महर्षयः (maharṣayaḥ) = The great sages, सप्त (sapta) = Seven, पूर्वे (pūrve) = Former, चत्वारः (catvāraḥ) = Four, मनवः (manavaḥ) = Manus (progenitors of mankind), तथा (tathā) = Also, मद्भावाः (madbhāvāḥ) = Born of My mind, मानसाः (mānasāḥ) = Mental, जाताः (jātāḥ) = Were born, येषां (yeṣāṁ) = Whose, लोकिम् (lokim) = In the planets, आ (ā) = In, माम् (mam) = Me, अमृताः (amṛtāḥ) = Immortal "},
+    
+    // Add more values as needed
+    ];
+    var filteredValuesArray = []; // Array to store filtered data
+  </script>
+  <a id="TOP"></a>
+  <h3>Judicial Pronouncement</h3>
+
+<!-- Dropdown Button -->
+<div class="link-container">
+<div class="dropdown">
+  <button class="dropbtn">&#9776; </button>
+      <div class="dropdown-content">
+      <a href="#TOP">&#x25B2;</a>
+      <a href="#MIDDLE">X&#772;</a>
+      <a href="#BOTTOM">&#x25BC;</a>
+  
+    <button id="toggleInputs">Show Input Fields</button><br>
+    <button id="saveStateButton" onclick="savePageState()">Save State</button><br>
+    <button id="showABCButton" onclick="toggleABC()">Show ABC</button><br>
+    <button id="copyABCButton" onclick="copyContent()">Copy ABC</button><br>
+    <button id="showAllJKLButton" onclick="toggleAllJKL()">Show All JKL</button><br>
+    <button id="showLMNButton" onclick="toggleLMN()">Show LMN</button><br>
+    <button id="loadStateButton" onclick="loadPageState()">Load State</button><br>
+    <button id="filterRawDataButton" onclick="toggleFilterRawData()">Filter Raw Data</button><br>
+    <button id="showXYZButton" onclick="toggleShowXYZ()">Show XYZ</button><br>
+    <button id="copyRawDataButton" onclick="copyRawData()">Copy Raw Data</button><br>
+  </div>
+</div>
+  </div>
+  <script>
+    // Scrolling specific buttons to scroll to their content
+    var showABCButton = document.getElementById('showABCButton')
+    var showAllJKLButton = document.getElementById('showAllJKLButton');
+    var showLMNButton = document.getElementById('showLMNButton');
+    var filterRawDataButton = document.getElementById('filterRawDataButton');
+    var showXYZButton = document.getElementById('showXYZButton');
+    
+    showABCButton.addEventListener('click',function(){
+    var abcContent = document.getElementById('abcOutput');
+    abcContent.scrollIntoView({behavior:'smooth'});
+  });
+    showAllJKLButton.addEventListener('click', function() {
+      var jklContent = document.getElementById('jklContainer'); // Replace with the actual ID of the JKL content
+      jklContent.scrollIntoView({ behavior: 'smooth' });
+    });
+  
+    showLMNButton.addEventListener('click', function() {
+      var lmnContent = document.getElementById('lmnContent'); // Replace with the actual ID of the LMN content
+      lmnContent.scrollIntoView({ behavior: 'smooth' });
+    });
+  
+    filterRawDataButton.addEventListener('click', function() {
+      var rawDataContent = document.getElementById('filteredRawDataContainer'); // Replace with the actual ID of the Raw Data content
+      rawDataContent.scrollIntoView({ behavior: 'smooth' });
+    });
+  
+    showXYZButton.addEventListener('click', function() {
+      var xyzContent = document.getElementById('xyzContainer'); // Replace with the actual ID of the XYZ content
+      xyzContent.scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
+  
+<label for="input0">Parking1:</label>
+<textarea id="input0" placeholder="Enter text for Input 0:heading"></textarea><br>
+<label for="input1">Input 1:</label>
+<textarea id="input1" oninput="autoPopulateInputs()" placeholder="Enter text for Input 1:ID"></textarea><br>
+<div id="inputContainer"></div>
+  <script>
+
+    // Function to create and append the input fields
+    function createInputFields() {
+        for (let i = 2; i <= 63; i++) {
+            // Create the label element
+            let label = document.createElement("label");
+            label.setAttribute("for", "input" + i);
+            label.innerText = "Input " + i + ":";
+            // Create the textarea element
+            let textarea = document.createElement("textarea");
+            textarea.setAttribute("id", "input" + i);
+            textarea.setAttribute("placeholder", "Enter text for Input " + i + ":fn" + (i - 3));
+            // Create a line break element
+            let br = document.createElement("br");
+            // Append the label, textarea, and line break elements to the input container
+            inputContainer.appendChild(label);
+            inputContainer.appendChild(textarea);
+            inputContainer.appendChild(br);
+        }
+    }
+
+    // Call the function to create input fields when the page loads
+    createInputFields();
+// JavaScript to toggle the input fields visibility and button appearance
+document.addEventListener("DOMContentLoaded", function () {
+  const inputContainer = document.getElementById("inputContainer");
+  const toggleButton = document.getElementById("toggleInputs");
+
+  // Function to toggle the input fields visibility and button appearance
+  function toggleInputFields() {
+    if (inputContainer.style.display === "none" || inputContainer.style.display === "") {
+      inputContainer.style.display = "block";
+      toggleButton.style.backgroundColor = "#e74c3c"; // Change button color when inputs are visible
+      toggleButton.innerText = "HIDE INPUTS"; // Change button text
+    } else {
+      inputContainer.style.display = "none";
+      toggleButton.style.backgroundColor = "#3498db"; // Change button color when inputs are hidden
+      toggleButton.innerText = "Toggle Input Fields"; // Change button text back
+    }
+  }
+
+  // Add a click event listener to the toggle button
+  toggleButton.addEventListener("click", toggleInputFields);
+
+  // Initial state for the button and input fields
+  inputContainer.style.display = "none"; // Hide input fields by default
+});
+
+
+
+  </script>
+  <script>
+     // Function to toggle the dropdown content
+    document.querySelector(".dropbtn").addEventListener("click", function () {
+      var dropdownContent = document.querySelector(".dropdown-content");
+      dropdownContent.classList.toggle("show");
+    });
+  
+    // Close the dropdown menu if the user clicks outside of it
+    window.onclick = function (event) {
+      if (!event.target.matches(".dropbtn")) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains("show")) {
+            openDropdown.classList.remove("show");
+          }
+        }
+      }
+    };
+  </script>
+  <a id="MIDDLE"></a>
+  <label for="input64">Input 64:</label>
+  <textarea id="input64" placeholder="Enter text for Input 64:Keywords"></textarea><br>
+
+  <p id="abcOutput" style="display: none;"></p>
+  <div id="jklContainer"></div>
+  <div id="xyzContainer"></div>
+  <div id="lmnContent" style="display: none;">
+    <p id="lmnOutput"></p>
+    <div id="lmnDetails" style="display: none;">
+      <!-- Detailed content will be added here -->
+    </div>
+  </div>
+   <label for="input00">Parking2:</label>
+  <textarea id="input00" placeholder="Enter text for Input 00:heading"></textarea><br>
+    <textarea id="filterInput" placeholder="Enter filter command here using and, or, not"></textarea><br>
+  <div id="filteredRawDataContainer"></div>
+  <!--content of filtered raw data is visible here-->
+
+  <script>
+    //script related to jkl button
+    var showAllJKLButton = document.getElementById("showAllJKLButton");
+    var jklContainer = document.getElementById("jklContainer");
+    // Function to update the content of the "JKL" button
+    function toggleAllJKL() {
+      if (jklContainer.innerHTML === '') {
+        // Generate JKL content from valuesArray if it's empty
+        for (var i = 0; i < valuesArray.length; i++) {
+          var input1Value = valuesArray[i].input1;
+          var input2Value = valuesArray[i].input2.replace(/</g, "<").replace(/>/g, ">");
+          var input3Value = valuesArray[i].input3.replace(/</g, "<").replace(/>/g, ">");
+          var input4Value = valuesArray[i].input4.replace(/</g, "<").replace(/>/g, ">");
+          var input5Value = valuesArray[i].input5.replace(/</g, "<").replace(/>/g, ">");
+          var input6Value = valuesArray[i].input6.replace(/</g, "<").replace(/>/g, ">");
+          var input7Value = valuesArray[i].input7.replace(/</g, "<").replace(/>/g, ">");
+          var input8Value = valuesArray[i].input8.replace(/</g, "<").replace(/>/g, ">");
+          var input9Value = valuesArray[i].input9.replace(/</g, "<").replace(/>/g, ">");
+          var input10Value = valuesArray[i].input10.replace(/</g, "<").replace(/>/g, ">");
+          var input11Value = valuesArray[i].input11.replace(/</g, "<").replace(/>/g, ">");
+          var input12Value = valuesArray[i].input12.replace(/</g, "<").replace(/>/g, ">");
+          var input13Value = valuesArray[i].input13.replace(/</g, "<").replace(/>/g, ">");
+          var input14Value = valuesArray[i].input14.replace(/</g, "<").replace(/>/g, ">");
+          var input15Value = valuesArray[i].input15.replace(/</g, "<").replace(/>/g, ">");
+          var input16Value = valuesArray[i].input16.replace(/</g, "<").replace(/>/g, ">");
+          var input17Value = valuesArray[i].input17.replace(/</g, "<").replace(/>/g, ">");
+          var input18Value = valuesArray[i].input18.replace(/</g, "<").replace(/>/g, ">");
+          var input19Value = valuesArray[i].input19.replace(/</g, "<").replace(/>/g, ">");
+          var input20Value = valuesArray[i].input20.replace(/</g, "<").replace(/>/g, ">");
+          var input21Value = valuesArray[i].input21.replace(/</g, "<").replace(/>/g, ">");
+          var input22Value = valuesArray[i].input22.replace(/</g, "<").replace(/>/g, ">");
+          var input23Value = valuesArray[i].input23.replace(/</g, "<").replace(/>/g, ">");
+          var input24Value = valuesArray[i].input24.replace(/</g, "<").replace(/>/g, ">");
+          var input25Value = valuesArray[i].input25.replace(/</g, "<").replace(/>/g, ">");
+          var input26Value = valuesArray[i].input26.replace(/</g, "<").replace(/>/g, ">");
+          var input27Value = valuesArray[i].input27.replace(/</g, "<").replace(/>/g, ">");
+          var input28Value = valuesArray[i].input28.replace(/</g, "<").replace(/>/g, ">");
+          var input29Value = valuesArray[i].input29.replace(/</g, "<").replace(/>/g, ">");
+          var input30Value = valuesArray[i].input30.replace(/</g, "<").replace(/>/g, ">");
+          var input31Value = valuesArray[i].input31.replace(/</g, "<").replace(/>/g, ">");
+          var input32Value = valuesArray[i].input32.replace(/</g, "<").replace(/>/g, ">");
+          var input33Value = valuesArray[i].input33.replace(/</g, "<").replace(/>/g, ">");
+          var input34Value = valuesArray[i].input34.replace(/</g, "<").replace(/>/g, ">");
+          var input35Value = valuesArray[i].input35.replace(/</g, "<").replace(/>/g, ">");
+          var input36Value = valuesArray[i].input36.replace(/</g, "<").replace(/>/g, ">");
+          var input37Value = valuesArray[i].input37.replace(/</g, "<").replace(/>/g, ">");
+          var input38Value = valuesArray[i].input38.replace(/</g, "<").replace(/>/g, ">");
+          var input39Value = valuesArray[i].input39.replace(/</g, "<").replace(/>/g, ">");
+          var input40Value = valuesArray[i].input40.replace(/</g, "<").replace(/>/g, ">");
+          var input41Value = valuesArray[i].input41.replace(/</g, "<").replace(/>/g, ">");
+          var input42Value = valuesArray[i].input42.replace(/</g, "<").replace(/>/g, ">");
+          var input43Value = valuesArray[i].input43.replace(/</g, "<").replace(/>/g, ">");
+          var input44Value = valuesArray[i].input44.replace(/</g, "<").replace(/>/g, ">");
+          var input45Value = valuesArray[i].input45.replace(/</g, "<").replace(/>/g, ">");
+          var input46Value = valuesArray[i].input46.replace(/</g, "<").replace(/>/g, ">");
+          var input47Value = valuesArray[i].input47.replace(/</g, "<").replace(/>/g, ">");
+          var input48Value = valuesArray[i].input48.replace(/</g, "<").replace(/>/g, ">");
+          var input49Value = valuesArray[i].input49.replace(/</g, "<").replace(/>/g, ">");
+          var input50Value = valuesArray[i].input50.replace(/</g, "<").replace(/>/g, ">");
+          var input51Value = valuesArray[i].input51.replace(/</g, "<").replace(/>/g, ">");
+          var input52Value = valuesArray[i].input52.replace(/</g, "<").replace(/>/g, ">");
+          var input53Value = valuesArray[i].input53.replace(/</g, "<").replace(/>/g, ">");
+          var input54Value = valuesArray[i].input54.replace(/</g, "<").replace(/>/g, ">");
+          var input55Value = valuesArray[i].input55.replace(/</g, "<").replace(/>/g, ">");
+          var input56Value = valuesArray[i].input56.replace(/</g, "<").replace(/>/g, ">");
+          var input57Value = valuesArray[i].input57.replace(/</g, "<").replace(/>/g, ">");
+          var input58Value = valuesArray[i].input58.replace(/</g, "<").replace(/>/g, ">");
+          var input59Value = valuesArray[i].input59.replace(/</g, "<").replace(/>/g, ">");
+          var input60Value = valuesArray[i].input60.replace(/</g, "<").replace(/>/g, ">");
+          var input61Value = valuesArray[i].input61.replace(/</g, "<").replace(/>/g, ">");
+          var input62Value = valuesArray[i].input62.replace(/</g, "<").replace(/>/g, ">");
+          var input63Value = valuesArray[i].input63.replace(/</g, "<").replace(/>/g, ">");
+          var input64Value = valuesArray[i].input64.replace(/</g, "<").replace(/>/g, ">");
+          var jklContentText = '<b><u>' + input1Value + '</b></u>'+': ' + input2Value +  input3Value + '<br> ';
+          jklContentText += '<a href="javascript:void(0)" onclick="toggleJKLDetails(event, ' + i + ')">[' + (i + 1) + ']</a>';
+          jklContentText += '<div id="jklDetails_' + i + '" class="jkl-details">' + input1Value + ":" + input4Value + input5Value + input6Value + input7Value + input8Value + input9Value + input10Value + input11Value + input12Value + input13Value + input14Value + input15Value + input16Value + input17Value + input18Value + input19Value + input20Value + input21Value + input22Value + input23Value + input24Value + input25Value + input26Value + input27Value + input28Value + input29Value + input30Value + input31Value + input32Value + input33Value + input34Value + input35Value + input36Value + input37Value + input38Value + input39Value + input40Value + input41Value + input42Value + input43Value + input44Value + input45Value + input46Value + input47Value + input48Value + input49Value + input50Value + input51Value + input52Value + input53Value + input54Value + input55Value + input56Value + input57Value + input58Value + input59Value + input60Value + input61Value + input62Value + input63Value + '<br>';
+          jklContentText += '<a href="javascript:void(0)" onclick="toggleJKLDetails(event, ' + i + ')">&#8617;</a>';
+          jklContentText += '<div id="jklDetails_' + i + '" class="jkl-details">' + '</div>' + '</div>';
+          var jklContent = document.createElement("div");
+          jklContent.innerHTML = jklContentText;
+          jklContainer.appendChild(jklContent);
+        }
+        showAllJKLButton.textContent = "Hide All JKL"; // Update button text
+        showAllJKLButton.classList.add("active"); // Add "active" class
+      } else {
+        // Clear JKL content if it's not empty
+        jklContainer.innerHTML = '';
+        showAllJKLButton.textContent = "Show All JKL"; // Update button text
+        showAllJKLButton.classList.remove("active"); // Remove "active" class
+      }
+    }
+    // Toggle the visibility of JKL details
+    function toggleJKLDetails(event, index) {
+      event.preventDefault(); // Prevent the default anchor behavior
+      var detailsDiv = document.getElementById('jklDetails_' + index);
+      // Toggle the display of the clicked detail
+      if (detailsDiv.style.display === 'block') {
+        detailsDiv.style.display = 'none'; // Close the clicked detail
+      } else {
+        // Close all open details, (एउटा लिङ्क खोल्दा अर्को लिङ्कको content बन्द नगर्ने भए यो ३ लाइन हटाइदिनुहोस्)
+        var allDetails = document.querySelectorAll('.jkl-details');
+        allDetails.forEach(function (detail) {
+          detail.style.display = 'none';
+        });
+        // Open the clicked detail
+        detailsDiv.style.display = 'block';
+      }
+    }
+  </script>
+  <script>
+    //script related to xyz button (it partially depend on the text input of filter row data)
+    // Function to update the content of the "XYZ" button based on filtered data
+    function showFilteredXYZ() {
+      var xyzContainer = document.getElementById("xyzContainer");
+      xyzContainer.innerHTML = ''; // Clear previous content
+      if (filteredValuesArray.length === 0) {
+        xyzContainer.textContent = "NO MATCH FOUND";
+      } else {
+        // Generate XYZ content from filteredValuesArray
+        for (var i = 0; i < filteredValuesArray.length; i++) {
+          var input1Value = filteredValuesArray[i].input1;
+          var input2Value = filteredValuesArray[i].input2.replace(/</g, "<").replace(/>/g, ">");
+          var input3Value = filteredValuesArray[i].input3.replace(/</g, "<").replace(/>/g, ">");
+          var input4Value = filteredValuesArray[i].input4.replace(/</g, "<").replace(/>/g, ">");
+          var input5Value = filteredValuesArray[i].input5.replace(/</g, "<").replace(/>/g, ">");
+          var input6Value = filteredValuesArray[i].input6.replace(/</g, "<").replace(/>/g, ">");
+          var input7Value = filteredValuesArray[i].input7.replace(/</g, "<").replace(/>/g, ">");
+          var input8Value = filteredValuesArray[i].input8.replace(/</g, "<").replace(/>/g, ">");
+          var input9Value = filteredValuesArray[i].input9.replace(/</g, "<").replace(/>/g, ">");
+          var input10Value = filteredValuesArray[i].input10.replace(/</g, "<").replace(/>/g, ">");
+          var input11Value = filteredValuesArray[i].input11.replace(/</g, "<").replace(/>/g, ">");
+          var input12Value = filteredValuesArray[i].input12.replace(/</g, "<").replace(/>/g, ">");
+          var input13Value = filteredValuesArray[i].input13.replace(/</g, "<").replace(/>/g, ">");
+          var input14Value = filteredValuesArray[i].input14.replace(/</g, "<").replace(/>/g, ">");
+          var input15Value = filteredValuesArray[i].input15.replace(/</g, "<").replace(/>/g, ">");
+          var input16Value = filteredValuesArray[i].input16.replace(/</g, "<").replace(/>/g, ">");
+          var input17Value = filteredValuesArray[i].input17.replace(/</g, "<").replace(/>/g, ">");
+          var input18Value = filteredValuesArray[i].input18.replace(/</g, "<").replace(/>/g, ">");
+          var input19Value = filteredValuesArray[i].input19.replace(/</g, "<").replace(/>/g, ">");
+          var input20Value = filteredValuesArray[i].input20.replace(/</g, "<").replace(/>/g, ">");
+          var input21Value = filteredValuesArray[i].input21.replace(/</g, "<").replace(/>/g, ">");
+          var input22Value = filteredValuesArray[i].input22.replace(/</g, "<").replace(/>/g, ">");
+          var input23Value = filteredValuesArray[i].input23.replace(/</g, "<").replace(/>/g, ">");
+          var input24Value = filteredValuesArray[i].input24.replace(/</g, "<").replace(/>/g, ">");
+          var input25Value = filteredValuesArray[i].input25.replace(/</g, "<").replace(/>/g, ">");
+          var input26Value = filteredValuesArray[i].input26.replace(/</g, "<").replace(/>/g, ">");
+          var input27Value = filteredValuesArray[i].input27.replace(/</g, "<").replace(/>/g, ">");
+          var input28Value = filteredValuesArray[i].input28.replace(/</g, "<").replace(/>/g, ">");
+          var input29Value = filteredValuesArray[i].input29.replace(/</g, "<").replace(/>/g, ">");
+          var input30Value = filteredValuesArray[i].input30.replace(/</g, "<").replace(/>/g, ">");
+          var input31Value = filteredValuesArray[i].input31.replace(/</g, "<").replace(/>/g, ">");
+          var input32Value = filteredValuesArray[i].input32.replace(/</g, "<").replace(/>/g, ">");
+          var input33Value = filteredValuesArray[i].input33.replace(/</g, "<").replace(/>/g, ">");
+          var input34Value = filteredValuesArray[i].input34.replace(/</g, "<").replace(/>/g, ">");
+          var input35Value = filteredValuesArray[i].input35.replace(/</g, "<").replace(/>/g, ">");
+          var input36Value = filteredValuesArray[i].input36.replace(/</g, "<").replace(/>/g, ">");
+          var input37Value = filteredValuesArray[i].input37.replace(/</g, "<").replace(/>/g, ">");
+          var input38Value = filteredValuesArray[i].input38.replace(/</g, "<").replace(/>/g, ">");
+          var input39Value = filteredValuesArray[i].input39.replace(/</g, "<").replace(/>/g, ">");
+          var input40Value = filteredValuesArray[i].input40.replace(/</g, "<").replace(/>/g, ">");
+          var input41Value = filteredValuesArray[i].input41.replace(/</g, "<").replace(/>/g, ">");
+          var input42Value = filteredValuesArray[i].input42.replace(/</g, "<").replace(/>/g, ">");
+          var input43Value = filteredValuesArray[i].input43.replace(/</g, "<").replace(/>/g, ">");
+          var input44Value = filteredValuesArray[i].input44.replace(/</g, "<").replace(/>/g, ">");
+          var input45Value = filteredValuesArray[i].input45.replace(/</g, "<").replace(/>/g, ">");
+          var input46Value = filteredValuesArray[i].input46.replace(/</g, "<").replace(/>/g, ">");
+          var input47Value = filteredValuesArray[i].input47.replace(/</g, "<").replace(/>/g, ">");
+          var input48Value = filteredValuesArray[i].input48.replace(/</g, "<").replace(/>/g, ">");
+          var input49Value = filteredValuesArray[i].input49.replace(/</g, "<").replace(/>/g, ">");
+          var input50Value = filteredValuesArray[i].input50.replace(/</g, "<").replace(/>/g, ">");
+          var input51Value = filteredValuesArray[i].input51.replace(/</g, "<").replace(/>/g, ">");
+          var input52Value = filteredValuesArray[i].input52.replace(/</g, "<").replace(/>/g, ">");
+          var input53Value = filteredValuesArray[i].input53.replace(/</g, "<").replace(/>/g, ">");
+          var input54Value = filteredValuesArray[i].input54.replace(/</g, "<").replace(/>/g, ">");
+          var input55Value = filteredValuesArray[i].input55.replace(/</g, "<").replace(/>/g, ">");
+          var input56Value = filteredValuesArray[i].input56.replace(/</g, "<").replace(/>/g, ">");
+          var input57Value = filteredValuesArray[i].input57.replace(/</g, "<").replace(/>/g, ">");
+          var input58Value = filteredValuesArray[i].input58.replace(/</g, "<").replace(/>/g, ">");
+          var input59Value = filteredValuesArray[i].input59.replace(/</g, "<").replace(/>/g, ">");
+          var input60Value = filteredValuesArray[i].input60.replace(/</g, "<").replace(/>/g, ">");
+          var input61Value = filteredValuesArray[i].input61.replace(/</g, "<").replace(/>/g, ">");
+          var input62Value = filteredValuesArray[i].input62.replace(/</g, "<").replace(/>/g, ">");
+          var input63Value = filteredValuesArray[i].input63.replace(/</g, "<").replace(/>/g, ">");
+          var input64Value = filteredValuesArray[i].input64.replace(/</g, "<").replace(/>/g, ">");
+          var xyzContentText = '<b><u>' + input1Value +'</b></u>' +': ' + input2Value +  input3Value + ' <br> ';
+          xyzContentText += '<a href="javascript:void(0)" onclick="toggleXYZDetails(event, ' + i + ')">[' + (i + 1) + ']</a>';
+          xyzContentText += '<div id="xyzDetails_' + i + '" class="xyz-details">' + input1Value + ":" + input4Value + input5Value + input6Value + input7Value + input8Value + input9Value + input10Value + input11Value + input12Value + input13Value + input14Value + input15Value + input16Value + input17Value + input18Value + input19Value + input20Value + input21Value + input22Value + input23Value + input24Value + input25Value + input26Value + input27Value + input28Value + input29Value + input30Value + input31Value + input32Value + input33Value + input34Value + input35Value + input36Value + input37Value + input38Value + input39Value + input40Value + input41Value + input42Value + input43Value + input44Value + input45Value + input46Value + input47Value + input48Value + input49Value + input50Value + input51Value + input52Value + input53Value + input54Value + input55Value + input56Value + input57Value + input58Value + input59Value + input60Value + input61Value + input62Value + input63Value + '<br>';
+          xyzContentText += '<a href="javascript:void(0)" onclick="toggleXYZDetails(event, ' + i + ')">&#8617;</a>';
+          xyzContentText += '<div id="xyzDetails_' + i + '" class="xyz-details">' + '</div>' + '</div>';
+          var xyzContent = document.createElement("div");
+          xyzContent.innerHTML = xyzContentText;
+          xyzContainer.appendChild(xyzContent);
+        }
+        //extra added later
+        showAllXYZButton.textContent = "Hide All XYZ"; // Update button text
+        showAllXYZButton.classList.add("active"); // Add "active" class
+      }
+    }
+    // Toggle the visibility of XYZ details
+    function toggleXYZDetails(event, index) {
+      event.preventDefault(); // Prevent the default anchor behavior
+      var detailsDiv = document.getElementById('xyzDetails_' + index);
+      // Toggle the display of the clicked detail
+      if (detailsDiv.style.display === 'block') {
+        detailsDiv.style.display = 'none'; // Close the clicked detail
+      } else {
+        // Close all open details, 
+        var allDetails = document.querySelectorAll('.xyz-details');
+        allDetails.forEach(function (detail) {
+          detail.style.display = 'none';
+        });
+        // Open the clicked detail
+        detailsDiv.style.display = 'block';
+      }
+    }
+    //toggling the visibility of ShowXYZ and Filter Raw Data button
+    var showXYZButton = document.getElementById("showXYZButton");
+    var filterRawDataButton = document.getElementById("filterRawDataButton");
+    // Function to toggle the "Show XYZ" button text
+    var showXYZButton = document.getElementById("showXYZButton");
+    var filterRawDataButton = document.getElementById("filterRawDataButton");
+    var xyzContainer = document.getElementById("xyzContainer");
+    var filteredRawDataContainer = document.getElementById("filteredRawDataContainer");
+    // Function to toggle the "Show XYZ" button text and visibility
+    function toggleShowXYZ() {
+      if (xyzContainer.classList.contains("hidden")) {
+        showXYZButton.textContent = "Hide XYZ";
+        xyzContainer.classList.remove("hidden");
+        xyzContainer.classList.add("visible");
+        showXYZButton.classList.add("active"); // Add the active button class
+      } else {
+        showXYZButton.textContent = "Show XYZ";
+        xyzContainer.classList.remove("visible");
+        xyzContainer.classList.add("hidden");
+        showXYZButton.classList.remove("active"); // Remove the active button class
+      }
+      showFilteredXYZ(); // Call the function to update XYZ content
+    }
+  </script>
+  <script>
+    // Function to filter the raw data and display them in a new container
+    function filterRawData() {
+      var filterInput = document.getElementById('filterInput').value;
+      var filteredRawDataContainer = document.getElementById('filteredRawDataContainer');
+      filteredRawDataContainer.innerHTML = ''; // Clear previous content
+      var filteredRawData = [];
+      // Iterate through the raw data and apply the filter
+      valuesArray.forEach(function (item, index) {
+        var input64 = item.input64;
+        var filtered = false;
+        // Split the filter into terms using spaces
+        var filterTerms = filterInput.split(' ');
+        // Variables to track the current logical operator and result
+        var currentOperator = 'AND'; // Default to AND
+        var currentResult = true;
+        // Process each term in the filter
+        filterTerms.forEach(function (term) {
+          if (term.toUpperCase() === 'AND') {
+            currentOperator = 'AND';
+          } else if (term.toUpperCase() === 'OR') {
+            currentOperator = 'OR';
+          } else if (term.toUpperCase() === 'NOT') {
+            currentOperator = 'NOT';
+          } else {
+            if (currentOperator === 'AND') {
+              currentResult = currentResult && input64.includes(term);
+            } else if (currentOperator === 'OR') {
+              currentResult = currentResult || input64.includes(term);
+            } else if (currentOperator === 'NOT') {
+              currentResult = currentResult && !input64.includes(term);
+            }
+          }
+        });
+        // After processing all terms, the currentResult contains the final result
+        filtered = currentResult;
+        // If filtered, add the item to filteredRawData and display it
+        if (filtered) {
+          filteredRawData.push(item);
+        }
+      });
+      // Display the filtered raw data
+      if (filteredRawData.length === 0) {
+        filteredRawDataContainer.textContent = "No matching raw data found.";
+      } else {
+    // Generate content for the filtered raw data
+    for (var i = 0; i < filteredRawData.length; i++) {
+        var rawDataItem = filteredRawData[i];
+        var rawDataItemText = JSON.stringify(rawDataItem);
+        var rawDataItemDiv = document.createElement('div');
+
+        // Create a <span> element for the 'Raw Data' text
+        var rawDataLabel = document.createElement('span');
+        rawDataLabel.style.fontWeight = 'bold'; // Make it bold
+        rawDataLabel.style.textDecoration = 'underline'; // Underline it
+        rawDataLabel.style.color = 'red'; // Underline it
+        rawDataLabel.textContent = 'Raw Data';
+
+        // Create a <span> element for the index and apply the same styles
+        var indexLabel = document.createElement('span');
+        indexLabel.style.fontWeight = 'bold'; // Make it bold
+        indexLabel.style.textDecoration = 'underline'; // Underline it
+        indexLabel.style.color = 'red'; // Underline it
+        indexLabel.textContent = (i + 1);
+
+        // Create a line break element
+        var lineBreak = document.createElement('br');
+
+        // Create a text node for rawDataItemText
+        var textNode = document.createTextNode(': ' + rawDataItemText);
+
+        // Append the <span> elements, line break, and text node to rawDataItemDiv
+        rawDataItemDiv.appendChild(rawDataLabel);
+        rawDataItemDiv.appendChild(indexLabel);
+        rawDataItemDiv.appendChild(lineBreak);
+        rawDataItemDiv.appendChild(textNode);
+
+        filteredRawDataContainer.appendChild(rawDataItemDiv);
+    }
+}
+
+// Update filteredValuesArray with the filtered data for XYZ button
+filteredValuesArray = filteredRawData;
+
+    }
+</script>
+    <script>
+   
+
+    // Function to toggle the "Filter Raw Data" button text and visibility
+// Function to toggle the "Filter Raw Data" button text, visibility, and color
+function toggleFilterRawData() {
+  if (filteredRawDataContainer.classList.contains("hidden")) {
+    filterRawDataButton.textContent = "Hide Raw Data";
+    filterRawDataButton.classList.add("active"); // Add "active" class for color change
+    filteredRawDataContainer.classList.remove("hidden");
+    filteredRawDataContainer.classList.add("visible");
+  } else {
+    filterRawDataButton.textContent = "Filter Raw Data";
+    filterRawDataButton.classList.remove("active"); // Remove "active" class
+    filteredRawDataContainer.classList.remove("visible");
+    filteredRawDataContainer.classList.add("hidden");
+  }
+  filterRawData(); // Call the function to update filtered raw data content
+}
+
+  </script>
+  <script>
+    // Function to copy raw data to the clipboard
+    function copyRawData() {
+      var rawDataContainer = document.getElementById("filteredRawDataContainer");
+      var range = document.createRange();
+      range.selectNode(rawDataContainer);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      document.execCommand("copy");
+      window.getSelection().removeAllRanges();
+      alert("Raw data copied to clipboard!");
+    }
+  </script>
+
+  <script>
+    //script for autopopulating the input fields and shortcut key as well as sanitization
+    var mainTextVisible = false;
+    var lmnContentVisible = false;
+    var lmnDetailsVisible = false;
+    //autopopulating the input fields
+    function autoPopulateInputs() {
+      var input1Value = document.getElementById("input1").value;
+      var matchingValue = valuesArray.find(function (item) {
+        return item.input1 === input1Value;
+      });
+      var input1Field = document.getElementById("input1");
+      if (matchingValue) {
+        input1Field.value = matchingValue.input1;
+        input1Field.classList.remove("no-match");
+        input1Field.classList.add("match");
+        // Rest of your code to populate other fields...
+      } else {
+        input1Field.value = input1Value;
+        input1Field.classList.remove("match");
+        input1Field.classList.add("no-match");
+      }
+      if (matchingValue) {
+        document.getElementById("input2").value = matchingValue.input2.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input3").value = matchingValue.input3.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input4").value = matchingValue.input4.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input5").value = matchingValue.input5.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input6").value = matchingValue.input6.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input7").value = matchingValue.input7.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input8").value = matchingValue.input8.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input9").value = matchingValue.input9.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input10").value = matchingValue.input10.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input11").value = matchingValue.input11.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input12").value = matchingValue.input12.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input13").value = matchingValue.input13.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input14").value = matchingValue.input14.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input15").value = matchingValue.input15.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input16").value = matchingValue.input16.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input17").value = matchingValue.input17.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input18").value = matchingValue.input18.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input19").value = matchingValue.input19.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input20").value = matchingValue.input20.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input21").value = matchingValue.input21.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input22").value = matchingValue.input22.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input23").value = matchingValue.input23.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input24").value = matchingValue.input24.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input25").value = matchingValue.input25.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input26").value = matchingValue.input26.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input27").value = matchingValue.input27.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input28").value = matchingValue.input28.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input29").value = matchingValue.input29.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input30").value = matchingValue.input30.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input31").value = matchingValue.input31.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input32").value = matchingValue.input32.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input33").value = matchingValue.input33.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input34").value = matchingValue.input34.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input35").value = matchingValue.input35.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input36").value = matchingValue.input36.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input37").value = matchingValue.input37.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input38").value = matchingValue.input38.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input39").value = matchingValue.input39.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input40").value = matchingValue.input40.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input41").value = matchingValue.input41.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input42").value = matchingValue.input42.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input43").value = matchingValue.input43.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input44").value = matchingValue.input44.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input45").value = matchingValue.input45.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input46").value = matchingValue.input46.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input47").value = matchingValue.input47.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input48").value = matchingValue.input48.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input49").value = matchingValue.input49.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input50").value = matchingValue.input50.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input51").value = matchingValue.input51.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input52").value = matchingValue.input52.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input53").value = matchingValue.input53.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input54").value = matchingValue.input54.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input55").value = matchingValue.input55.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input56").value = matchingValue.input56.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input57").value = matchingValue.input57.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input58").value = matchingValue.input58.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input59").value = matchingValue.input59.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input60").value = matchingValue.input60.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input61").value = matchingValue.input61.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input62").value = matchingValue.input62.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input63").value = matchingValue.input63.replace(/</g, "<").replace(/>/g, ">");
+        document.getElementById("input64").value = matchingValue.input64.replace(/</g, "<").replace(/>/g, ">");
+      } else {
+        document.getElementById("input2").value = "";
+        document.getElementById("input3").value = "";
+        document.getElementById("input4").value = "";
+        document.getElementById("input5").value = "";
+        document.getElementById("input6").value = "";
+        document.getElementById("input7").value = "";
+        document.getElementById("input8").value = "";
+        document.getElementById("input9").value = "";
+        document.getElementById("input10").value = "";
+        document.getElementById("input11").value = "";
+        document.getElementById("input12").value = "";
+        document.getElementById("input13").value = "";
+        document.getElementById("input14").value = "";
+        document.getElementById("input15").value = "";
+        document.getElementById("input16").value = "";
+        document.getElementById("input17").value = "";
+        document.getElementById("input18").value = "";
+        document.getElementById("input19").value = "";
+        document.getElementById("input20").value = "";
+        document.getElementById("input21").value = "";
+        document.getElementById("input22").value = "";
+        document.getElementById("input23").value = "";
+        document.getElementById("input24").value = "";
+        document.getElementById("input25").value = "";
+        document.getElementById("input26").value = "";
+        document.getElementById("input27").value = "";
+        document.getElementById("input28").value = "";
+        document.getElementById("input29").value = "";
+        document.getElementById("input29").value = "";
+        document.getElementById("input30").value = "";
+        document.getElementById("input31").value = "";
+        document.getElementById("input32").value = "";
+        document.getElementById("input33").value = "";
+        document.getElementById("input34").value = "";
+        document.getElementById("input35").value = "";
+        document.getElementById("input36").value = "";
+        document.getElementById("input37").value = "";
+        document.getElementById("input38").value = "";
+        document.getElementById("input39").value = "";
+        document.getElementById("input40").value = "";
+        document.getElementById("input41").value = "";
+        document.getElementById("input42").value = "";
+        document.getElementById("input43").value = "";
+        document.getElementById("input44").value = "";
+        document.getElementById("input45").value = "";
+        document.getElementById("input46").value = "";
+        document.getElementById("input47").value = "";
+        document.getElementById("input48").value = "";
+        document.getElementById("input49").value = "";
+        document.getElementById("input50").value = "";
+        document.getElementById("input51").value = "";
+        document.getElementById("input52").value = "";
+        document.getElementById("input53").value = "";
+        document.getElementById("input54").value = "";
+        document.getElementById("input55").value = "";
+        document.getElementById("input56").value = "";
+        document.getElementById("input57").value = "";
+        document.getElementById("input58").value = "";
+        document.getElementById("input59").value = "";
+        document.getElementById("input60").value = "";
+        document.getElementById("input61").value = "";
+        document.getElementById("input62").value = "";
+        document.getElementById("input63").value = "";
+        document.getElementById("input64").value = "";
+      }
+    }
+    // Function to format the date as "dd Month Name, yyyy-hrhr:minmin"into input field 9
+    function formatDate(date) {
+      const months = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+      ];
+      const day = date.getDate();
+      const monthName = months[date.getMonth()];
+      const year = date.getFullYear();
+      const hours = date.getHours().toString().padStart(2, '0'); // Add leading zero if necessary
+      const minutes = date.getMinutes().toString().padStart(2, '0'); // Add leading zero if necessary
+      return `, Accessed on:${day} ${monthName}, ${year}-${hours}:${minutes}`;
+    }
+    // Function to handle the Ctrl + D + T key combination
+    function handleCtrlDT(event) {
+      if (event.ctrlKey && event.key === "d") {
+        // Prevent the default behavior of the key combination
+        event.preventDefault();
+        // Generate the current date and time in the desired format
+        const currentDate = new Date();
+        const formattedDate = formatDate(currentDate);
+        // Insert the formatted date into input 9
+        document.getElementById("input63").value = formattedDate;
+      }
+    }
+    // Add an event listener to the document for keydown events
+    document.addEventListener("keydown", handleCtrlDT);
+    //Using enter key etc. to enter #x003C;br> etc. in input field
+    function addLineBreak(event) {
+      if (event.key === "Enter" && event.ctrlKey) {
+        event.preventDefault();
+        var input = event.target;
+        var cursorPosition = input.selectionStart;
+        var currentValue = input.value;
+        var newValue =
+          currentValue.substring(0, cursorPosition) +
+          "<br>" +
+          currentValue.substring(cursorPosition);
+        input.value = newValue;
+        input.setSelectionRange(cursorPosition + 4, cursorPosition + 4);
+      }
+      if (event.key === "b" && event.ctrlKey) {
+        event.preventDefault();
+        var input = event.target;
+        var cursorPosition = input.selectionStart;
+        var currentValue = input.value;
+        var newValue =
+          currentValue.substring(0, cursorPosition) +
+          "<b>" +
+          "</b>" +
+          currentValue.substring(cursorPosition);
+        input.value = newValue;
+        input.setSelectionRange(cursorPosition + 3, cursorPosition + 3);
+      }
+      if (event.key === "u" && event.ctrlKey) {
+        event.preventDefault();
+        var input = event.target;
+        var cursorPosition = input.selectionStart;
+        var currentValue = input.value;
+        var newValue =
+          currentValue.substring(0, cursorPosition) +
+          "<u>" +
+          "</u>" +
+          currentValue.substring(cursorPosition);
+        input.value = newValue;
+        input.setSelectionRange(cursorPosition + 3, cursorPosition + 3);
+      }
+    }
+    var inputFields = document.querySelectorAll("input, textarea");
+    inputFields.forEach(function (input) {
+      input.addEventListener("keydown", addLineBreak);
+    });
+  </script>
+  <script>
+    //script for LMN button
+    // Toggle the visibility of LMN content
+    function toggleLMN() {
+      var lmnContent = document.getElementById("lmnContent");
+      var showLMNButton = document.getElementById("showLMNButton");
+      lmnContentVisible = !lmnContentVisible;
+      if (lmnContentVisible) {
+        var input1Value = document.getElementById("input1").value;
+        var input2Value = document.getElementById("input2").value.replace(/</g, "<").replace(/>/g, ">");
+        var input3Value = document.getElementById("input3").value.replace(/</g, "<").replace(/>/g, ">");
+        var lmnContentText = '<u>' + input1Value + ': ' + input2Value + '</b></u>' + input3Value + ' + ';
+        lmnContentText += '<a href="javascript:void(0)" onclick="toggleDetails()">[Details]</a>';
+        document.getElementById("lmnOutput").innerHTML = lmnContentText;
+        lmnContent.style.display = "block";
+        showLMNButton.textContent = "Hide LMN";
+        showLMNButton.classList.add("active"); // Add "active" class
+      } else {
+        lmnContent.style.display = "none";
+        showLMNButton.textContent = "Show LMN";
+        hideDetails();
+        showLMNButton.classList.remove("active"); // Remove "active" class
+        hideDetails(); // Also call hideDetails when hiding LMN
+      }
+    }
+    // Toggle the visibility of LMN details
+    function toggleDetails() {
+      var lmnDetails = document.getElementById("lmnDetails");
+      lmnDetailsVisible = !lmnDetailsVisible;
+      if (lmnDetailsVisible) {
+        var input1Value = document.getElementById("input1").value;
+        var input2Value = document.getElementById("input2").value.replace(/</g, "<").replace(/>/g, ">");
+        var input3Value = document.getElementById("input3").value.replace(/</g, "<").replace(/>/g, ">");
+        var input4Value = document.getElementById("input4").value.replace(/</g, "<").replace(/>/g, ">");
+        var input5Value = document.getElementById("input5").value.replace(/</g, "<").replace(/>/g, ">");
+        var input6Value = document.getElementById("input6").value.replace(/</g, "<").replace(/>/g, ">");
+        var input7Value = document.getElementById("input7").value.replace(/</g, "<").replace(/>/g, ">");
+        var input8Value = document.getElementById("input8").value.replace(/</g, "<").replace(/>/g, ">");
+        var input9Value = document.getElementById("input9").value.replace(/</g, "<").replace(/>/g, ">");
+        var input10Value = document.getElementById("input10").value.replace(/</g, "<").replace(/>/g, ">");
+        var input11Value = document.getElementById("input11").value.replace(/</g, "<").replace(/>/g, ">");
+        var input12Value = document.getElementById("input12").value.replace(/</g, "<").replace(/>/g, ">");
+        var input13Value = document.getElementById("input13").value.replace(/</g, "<").replace(/>/g, ">");
+        var input14Value = document.getElementById("input14").value.replace(/</g, "<").replace(/>/g, ">");
+        var input15Value = document.getElementById("input15").value.replace(/</g, "<").replace(/>/g, ">");
+        var input16Value = document.getElementById("input16").value.replace(/</g, "<").replace(/>/g, ">");
+        var input17Value = document.getElementById("input17").value.replace(/</g, "<").replace(/>/g, ">");
+        var input18Value = document.getElementById("input18").value.replace(/</g, "<").replace(/>/g, ">");
+        var input19Value = document.getElementById("input19").value.replace(/</g, "<").replace(/>/g, ">");
+        var input20Value = document.getElementById("input20").value.replace(/</g, "<").replace(/>/g, ">");
+        var input21Value = document.getElementById("input21").value.replace(/</g, "<").replace(/>/g, ">");
+        var input22Value = document.getElementById("input22").value.replace(/</g, "<").replace(/>/g, ">");
+        var input23Value = document.getElementById("input23").value.replace(/</g, "<").replace(/>/g, ">");
+        var input24Value = document.getElementById("input24").value.replace(/</g, "<").replace(/>/g, ">");
+        var input25Value = document.getElementById("input25").value.replace(/</g, "<").replace(/>/g, ">");
+        var input26Value = document.getElementById("input26").value.replace(/</g, "<").replace(/>/g, ">");
+        var input27Value = document.getElementById("input27").value.replace(/</g, "<").replace(/>/g, ">");
+        var input28Value = document.getElementById("input28").value.replace(/</g, "<").replace(/>/g, ">");
+        var input29Value = document.getElementById("input29").value.replace(/</g, "<").replace(/>/g, ">");
+        var input30Value = document.getElementById("input30").value.replace(/</g, "<").replace(/>/g, ">");
+        var input31Value = document.getElementById("input31").value.replace(/</g, "<").replace(/>/g, ">");
+        var input32Value = document.getElementById("input32").value.replace(/</g, "<").replace(/>/g, ">");
+        var input33Value = document.getElementById("input33").value.replace(/</g, "<").replace(/>/g, ">");
+        var input34Value = document.getElementById("input34").value.replace(/</g, "<").replace(/>/g, ">");
+        var input35Value = document.getElementById("input35").value.replace(/</g, "<").replace(/>/g, ">");
+        var input36Value = document.getElementById("input36").value.replace(/</g, "<").replace(/>/g, ">");
+        var input37Value = document.getElementById("input37").value.replace(/</g, "<").replace(/>/g, ">");
+        var input38Value = document.getElementById("input38").value.replace(/</g, "<").replace(/>/g, ">");
+        var input39Value = document.getElementById("input39").value.replace(/</g, "<").replace(/>/g, ">");
+        var input40Value = document.getElementById("input40").value.replace(/</g, "<").replace(/>/g, ">");
+        var input41Value = document.getElementById("input41").value.replace(/</g, "<").replace(/>/g, ">");
+        var input42Value = document.getElementById("input42").value.replace(/</g, "<").replace(/>/g, ">");
+        var input43Value = document.getElementById("input43").value.replace(/</g, "<").replace(/>/g, ">");
+        var input44Value = document.getElementById("input44").value.replace(/</g, "<").replace(/>/g, ">");
+        var input45Value = document.getElementById("input45").value.replace(/</g, "<").replace(/>/g, ">");
+        var input46Value = document.getElementById("input46").value.replace(/</g, "<").replace(/>/g, ">");
+        var input47Value = document.getElementById("input47").value.replace(/</g, "<").replace(/>/g, ">");
+        var input48Value = document.getElementById("input48").value.replace(/</g, "<").replace(/>/g, ">");
+        var input49Value = document.getElementById("input49").value.replace(/</g, "<").replace(/>/g, ">");
+        var input50Value = document.getElementById("input50").value.replace(/</g, "<").replace(/>/g, ">");
+        var input51Value = document.getElementById("input51").value.replace(/</g, "<").replace(/>/g, ">");
+        var input52Value = document.getElementById("input52").value.replace(/</g, "<").replace(/>/g, ">");
+        var input53Value = document.getElementById("input53").value.replace(/</g, "<").replace(/>/g, ">");
+        var input54Value = document.getElementById("input54").value.replace(/</g, "<").replace(/>/g, ">");
+        var input55Value = document.getElementById("input55").value.replace(/</g, "<").replace(/>/g, ">");
+        var input56Value = document.getElementById("input56").value.replace(/</g, "<").replace(/>/g, ">");
+        var input57Value = document.getElementById("input57").value.replace(/</g, "<").replace(/>/g, ">");
+        var input58Value = document.getElementById("input58").value.replace(/</g, "<").replace(/>/g, ">");
+        var input59Value = document.getElementById("input59").value.replace(/</g, "<").replace(/>/g, ">");
+        var input60Value = document.getElementById("input60").value.replace(/</g, "<").replace(/>/g, ">");
+        var input61Value = document.getElementById("input61").value.replace(/</g, "<").replace(/>/g, ">");
+        var input62Value = document.getElementById("input62").value.replace(/</g, "<").replace(/>/g, ">");
+        var input63Value = document.getElementById("input63").value.replace(/</g, "<").replace(/>/g, ">");
+        var input64Value = document.getElementById("input64").value.replace(/</g, "<").replace(/>/g, ">");
+        var detailsContent = '<div class="details-content">' + input1Value + ':' + input4Value + input5Value + input6Value + input7Value + input8Value + input9Value + input10Value + input11Value + input12Value + input13Value + input14Value + input15Value + input16Value + input17Value + input18Value + input19Value + input20Value + input21Value + input22Value + input23Value + input24Value + input25Value + input26Value + input27Value + input28Value + input29Value + input30Value + input31Value + input32Value + input33Value + input34Value + input35Value + input36Value + input37Value + input38Value + input39Value + input40Value + input41Value + input42Value + input43Value + input44Value + input45Value + input46Value + input47Value + input48Value + input49Value + input50Value + input51Value + input52Value + input53Value + input54Value + input55Value + input56Value + input57Value + input58Value + input59Value + input60Value + input61Value + input62Value + input63Value + input64Value + '</div>';
+        lmnDetails.innerHTML = detailsContent;
+        lmnDetails.style.display = "block";
+      } else {
+        lmnDetails.style.display = "none";
+      }
+    }
+    // Hide the details
+    function hideDetails() {
+      var lmnDetails = document.getElementById("lmnDetails");
+      lmnDetails.style.display = "none";
+      lmnDetailsVisible = false;
+    }
+  </script>
+  <script>
+    //script for ABC button
+    // Toggle the visibility of ABC content
+    var mainTextVisible = false; // Declare the variable
+    function toggleABC() {
+      var output = document.getElementById("abcOutput");
+      var showABCButton = document.getElementById("showABCButton");
+      mainTextVisible = !mainTextVisible;
+      if (mainTextVisible) {
+        var input1Value = document.getElementById("input1").value.replace(/</g, "<").replace(/>/g, ">");
+        var input2Value = document.getElementById("input2").value.replace(/</g, "<").replace(/>/g, ">");
+        var input3Value = document.getElementById("input3").value.replace(/</g, "<").replace(/>/g, ">");
+        var input4Value = document.getElementById("input4").value.replace(/</g, "<").replace(/>/g, ">");
+        var input5Value = document.getElementById("input5").value.replace(/</g, "<").replace(/>/g, ">");
+        var input6Value = document.getElementById("input6").value.replace(/</g, "<").replace(/>/g, ">");
+        var input7Value = document.getElementById("input7").value.replace(/</g, "<").replace(/>/g, ">");
+        var input8Value = document.getElementById("input8").value.replace(/</g, "<").replace(/>/g, ">");
+        var input9Value = document.getElementById("input9").value.replace(/</g, "<").replace(/>/g, ">");
+        var input10Value = document.getElementById("input10").value.replace(/</g, "<").replace(/>/g, ">");
+        var input11Value = document.getElementById("input11").value.replace(/</g, "<").replace(/>/g, ">");
+        var input12Value = document.getElementById("input12").value.replace(/</g, "<").replace(/>/g, ">");
+        var input13Value = document.getElementById("input13").value.replace(/</g, "<").replace(/>/g, ">");
+        var input14Value = document.getElementById("input14").value.replace(/</g, "<").replace(/>/g, ">");
+        var input15Value = document.getElementById("input15").value.replace(/</g, "<").replace(/>/g, ">");
+        var input16Value = document.getElementById("input16").value.replace(/</g, "<").replace(/>/g, ">");
+        var input17Value = document.getElementById("input17").value.replace(/</g, "<").replace(/>/g, ">");
+        var input18Value = document.getElementById("input18").value.replace(/</g, "<").replace(/>/g, ">");
+        var input19Value = document.getElementById("input19").value.replace(/</g, "<").replace(/>/g, ">");
+        var input20Value = document.getElementById("input20").value.replace(/</g, "<").replace(/>/g, ">");
+        var input21Value = document.getElementById("input21").value.replace(/</g, "<").replace(/>/g, ">");
+        var input22Value = document.getElementById("input22").value.replace(/</g, "<").replace(/>/g, ">");
+        var input23Value = document.getElementById("input23").value.replace(/</g, "<").replace(/>/g, ">");
+        var input24Value = document.getElementById("input24").value.replace(/</g, "<").replace(/>/g, ">");
+        var input25Value = document.getElementById("input25").value.replace(/</g, "<").replace(/>/g, ">");
+        var input26Value = document.getElementById("input26").value.replace(/</g, "<").replace(/>/g, ">");
+        var input27Value = document.getElementById("input27").value.replace(/</g, "<").replace(/>/g, ">");
+        var input28Value = document.getElementById("input28").value.replace(/</g, "<").replace(/>/g, ">");
+        var input29Value = document.getElementById("input29").value.replace(/</g, "<").replace(/>/g, ">");
+        var input30Value = document.getElementById("input30").value.replace(/</g, "<").replace(/>/g, ">");
+        var input31Value = document.getElementById("input31").value.replace(/</g, "<").replace(/>/g, ">");
+        var input32Value = document.getElementById("input32").value.replace(/</g, "<").replace(/>/g, ">");
+        var input33Value = document.getElementById("input33").value.replace(/</g, "<").replace(/>/g, ">");
+        var input34Value = document.getElementById("input34").value.replace(/</g, "<").replace(/>/g, ">");
+        var input35Value = document.getElementById("input35").value.replace(/</g, "<").replace(/>/g, ">");
+        var input36Value = document.getElementById("input36").value.replace(/</g, "<").replace(/>/g, ">");
+        var input37Value = document.getElementById("input37").value.replace(/</g, "<").replace(/>/g, ">");
+        var input38Value = document.getElementById("input38").value.replace(/</g, "<").replace(/>/g, ">");
+        var input39Value = document.getElementById("input39").value.replace(/</g, "<").replace(/>/g, ">");
+        var input40Value = document.getElementById("input40").value.replace(/</g, "<").replace(/>/g, ">");
+        var input41Value = document.getElementById("input41").value.replace(/</g, "<").replace(/>/g, ">");
+        var input42Value = document.getElementById("input42").value.replace(/</g, "<").replace(/>/g, ">");
+        var input43Value = document.getElementById("input43").value.replace(/</g, "<").replace(/>/g, ">");
+        var input44Value = document.getElementById("input44").value.replace(/</g, "<").replace(/>/g, ">");
+        var input45Value = document.getElementById("input45").value.replace(/</g, "<").replace(/>/g, ">");
+        var input46Value = document.getElementById("input46").value.replace(/</g, "<").replace(/>/g, ">");
+        var input47Value = document.getElementById("input47").value.replace(/</g, "<").replace(/>/g, ">");
+        var input48Value = document.getElementById("input48").value.replace(/</g, "<").replace(/>/g, ">");
+        var input49Value = document.getElementById("input49").value.replace(/</g, "<").replace(/>/g, ">");
+        var input50Value = document.getElementById("input50").value.replace(/</g, "<").replace(/>/g, ">");
+        var input51Value = document.getElementById("input51").value.replace(/</g, "<").replace(/>/g, ">");
+        var input52Value = document.getElementById("input52").value.replace(/</g, "<").replace(/>/g, ">");
+        var input53Value = document.getElementById("input53").value.replace(/</g, "<").replace(/>/g, ">");
+        var input54Value = document.getElementById("input54").value.replace(/</g, "<").replace(/>/g, ">");
+        var input55Value = document.getElementById("input55").value.replace(/</g, "<").replace(/>/g, ">");
+        var input56Value = document.getElementById("input56").value.replace(/</g, "<").replace(/>/g, ">");
+        var input57Value = document.getElementById("input57").value.replace(/</g, "<").replace(/>/g, ">");
+        var input58Value = document.getElementById("input58").value.replace(/</g, "<").replace(/>/g, ">");
+        var input59Value = document.getElementById("input59").value.replace(/</g, "<").replace(/>/g, ">");
+        var input60Value = document.getElementById("input60").value.replace(/</g, "<").replace(/>/g, ">");
+        var input61Value = document.getElementById("input61").value.replace(/</g, "<").replace(/>/g, ">");
+        var input62Value = document.getElementById("input62").value.replace(/</g, "<").replace(/>/g, ">");
+        var input63Value = document.getElementById("input63").value.replace(/</g, "<").replace(/>/g, ">");
+        var input64Value = document.getElementById("input64").value.replace(/</g, "<").replace(/>/g, ">");
+        output.textContent = '{input1: "' + input1Value + '", input2: "' + input2Value + '", input3: "' + input3Value + '", input4: "' + input4Value + '", input5: "' + input5Value + '", input6: "' + input6Value + '", input7: "' + input7Value + '", input8: "' + input8Value + '", input9: "' + input9Value + '", input10: "' + input10Value + '", input11: "' + input11Value + '", input12: "' + input12Value + '", input13: "' + input13Value + '", input14: "' + input14Value + '", input15: "' + input15Value + '", input16: "' + input16Value + '",input17: "' + input17Value + '",input18: "' + input18Value + '",input19: "' + input19Value + '",input20: "' + input20Value + '",input21: "' + input21Value + '",input22: "' + input22Value + '", input23: "' + input23Value + '",input24: "' + input24Value + '",input25: "' + input25Value + '", input26: "' + input26Value + '", input27: "' + input27Value + '", input28: "' + input28Value + '", input29: "' + input29Value + '", input30: "' + input30Value + '", input31: "' + input31Value + '", input32: "' + input32Value + '", input33: "' + input33Value + '", input34: "' + input34Value + '", input35: "' + input35Value + '", input36: "' + input36Value + '", input37: "' + input37Value + '", input38: "' + input38Value + '", input39: "' + input39Value + '", input40: "' + input40Value + '", input41: "' + input41Value + '", input42: "' + input42Value + '", input43: "' + input43Value + '", input44: "' + input44Value + '", input45: "' + input45Value + '", input46: "' + input46Value + '", input47: "' + input47Value + '", input48: "' + input48Value + '", input49: "' + input49Value + '", input50: "' + input50Value + '", input51: "' + input51Value + '", input52: "' + input52Value + '", input53: "' + input53Value + '", input54: "' + input54Value + '", input55: "' + input55Value + '", input56: "' + input56Value + '", input57: "' + input57Value + '", input58: "' + input58Value + '", input59: "' + input59Value + '", input60: "' + input60Value + '", input61: "' + input61Value + '", input62: "' + input62Value + '", input63: "' + input63Value + '", input64: "' + input64Value + '"}' + ",";
+        showABCButton.innerHTML = "Hide ABC";
+        showABCButton.classList.add("active"); // Add "active" class
+        output.style.display = "block";
+        showABCButton.textContent = "Hide ABC";
+      } else {
+        output.style.display = "none";
+        showABCButton.textContent = "Show ABC";
+        showABCButton.innerHTML = "Show ABC";
+        showABCButton.classList.remove("active"); // Remove "active" class}
+      }
+    }
+  </script>
+  </script>
+  <!-- this script is for saving and loading the page from the very position -->
+  <script>
+    function savePageState() {
+      // Check if local storage is available
+      if (typeof Storage !== "undefined") {
+        // Create an object to store the page state
+        var pageState = {
+          inputValues: {},
+          mainTextVisible: mainTextVisible,
+          lmnContentVisible: lmnContentVisible,
+          lmnDetailsVisible: lmnDetailsVisible,
+          outputContent: document.getElementById("abcOutput").textContent,
+          showAllJKLButtonActive: showAllJKLButton.classList.contains("active"),
+          jklContainerContent: jklContainer.innerHTML,
+          showLMNButtonActive: showLMNButton.classList.contains("active"),
+          lmnOutputContent: document.getElementById("lmnOutput").innerHTML,
+          lmnDetailsContent: document.getElementById("lmnDetails").innerHTML,
+        };
+        // Store the input field values
+        var inputFields = document.querySelectorAll("input, textarea");
+        inputFields.forEach(function (input) {
+          pageState.inputValues[input.id] = input.value;
+        });
+        // Convert the object to JSON and store it in local storage
+        localStorage.setItem("pageState", JSON.stringify(pageState));
+        alert("Page state saved successfully!");
+      } else {
+        alert(
+          "Local storage is not available."
+        );
+      }
+    }
+    function loadPageState() {
+      // Check if local storage is available
+      if (typeof Storage !== "undefined") {
+        // Retrieve the saved page state from local storage
+        var savedState = localStorage.getItem("pageState");
+        if (savedState) {
+          // Parse the JSON and restore the state
+          var pageState = JSON.parse(savedState);
+          // Restore input field values
+          for (var inputId in pageState.inputValues) {
+            var inputValue = pageState.inputValues[inputId];
+            document.getElementById(inputId).value = inputValue;
+          }
+          // Restore visibility states
+          mainTextVisible = pageState.mainTextVisible;
+          lmnContentVisible = pageState.lmnContentVisible;
+          lmnDetailsVisible = pageState.lmnDetailsVisible;
+          // Toggle visibility based on restored states
+          if (mainTextVisible) {
+            toggleABC();
+          }
+          if (lmnContentVisible) {
+            toggleLMN();
+          }
+          if (lmnDetailsVisible) {
+            toggleDetails();
+          }
+          // Restore output content and button states
+          document.getElementById("abcOutput").textContent = pageState.outputContent;
+          if (pageState.showAllJKLButtonActive) {
+            toggleAllJKL();
+          }
+          jklContainer.innerHTML = pageState.jklContainerContent;
+          if (pageState.showLMNButtonActive) {
+            toggleLMN();
+          }
+          document.getElementById("lmnOutput").innerHTML = pageState.lmnOutputContent;
+          document.getElementById("lmnDetails").innerHTML = pageState.lmnDetailsContent;
+          alert("Page state loaded successfully!");
+        } else {
+          alert("No saved state found.");
+        }
+      } else {
+        alert(
+          "Local storage is not available."
+        );
+      }
+    }
+  </script>
+    <script>
+
+
+      function copyContent() {
+        var output = document.getElementById("abcOutput").innerText;
+        navigator.clipboard.writeText(output).then(function () {
+          alert("Copied to clipboard!");
+        }).catch(function (error) {
+          console.error("Failed to copy to clipboard: ", error);
+        });
+      }
+      
+    </script>
+  <a id="BOTTOM"></a>
+  <footer>
+    <div id="abbr">
+      <p>
+        <br>cb1=constitutional bench (संवैधानिक इजलास)
+        <br>coni0=certiorari order not issued
+        <br>coi1=certiorari order issued
+        <br>db1=double bench (संयुक्त इजलास)
+        <br>efb5=extended full bench of five judges
+        <br>fb1=full bench(पूर्ण इजलास)
+        <br>ioi1=interim order issued (अन्तरिम आदेश जारी)
+        <br>ioni0=interim order not issued (अन्तरिम आदेश जारी नहुने)
+        <br>moni0=mandatory order not issued
+        <br>moi1=mandatory order issued (उत्प्रेषण)
+        <br>pg1=preference given (अग्राधिकार)
+        <br>sb1=single bench (एकल इजलास)
+        <br>sc1=supreme court(सर्वोच्च अदालत)
+        <br>sco0=show caused ordered not issued (कारण देखाउन आदेश जारी नहुने)
+        <br>sco1=show cause order issued (कारण देखाउ आदेश जारी)
+        <br>wi1=writ issued (रिट जारी)
+        <br>wip1=writ issued partially (रिट जारी आंशिक)
+        <br>wq1=writ quashed (रिट खारेज)
+        <br>kp1=koshi province
+        <br>pa1=province assembly
+        <br>cm1=constitutional morality
+        <br>voc1=vote of confidence
+        <br>ipk1=ishwor prasad khatiwoda
+        <br>cm2=chief minister
+        <br>pc1=parliamentary culture
+      </p>
+    </div>
+
+    <p id="developedby"><u><b>Developed By:</b></u><br>Shiva Prasad Acharya (M.Sc.; LL.M)<br>
+      Shiva.Acharya@supremecourt.gov.np <br>ऋषिपञ्चमि, २०८०
+    </p>
+  </footer>
+</body>
+
+</html>
